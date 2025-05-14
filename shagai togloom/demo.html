@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Шагай Орхих Тоглоом</title>
+  <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+
+  <h1>🎉😉 Шагай Орхих Тоглоом 🎇🥳</h1>
+  <h1>Монгол наадгайгаар наадацгаая</h1>
+    <div id="shagai1">
+        <img src="/horse.jpg" alt="" class="demo">
+    </div>
+    <div id="shagai2">
+        <img src="/sheep.jpg" alt="" class="demo">
+    </div>
+    <div id="shagai3">
+        <img src="/camel.png" alt="" class="demo">
+    </div>
+    <div id="shagai4">
+        <img src="/goat baby.jpg" alt="" class="demo">
+    </div>
+    <div class="clr"></div>
+    <strong><button onclick="Shagai()">Шагай орхих</button></strong>
+    <div class="clr"></div>
+  <button id="playGameButton" onclick="toggleDurem()">Тоглоом тоглох</button>
+  <div class="main">
+    <div class="durem">
+      <h1>Тун удахгүй</h1>
+      <button id="towch" onclick="close()">Хаах</button>
+    </div>
+    <br>
+    <br>
+  </div>
+
+ 
+
+  <div class="door">
+    <h2 id="word">Үр дүн:</h2>
+    <div id="result"></div>
+    <h3>Тайлбар</h3>
+    <div id="tailbar1"></div>
+    <div id="tailbar2"></div>
+  </div>
+
+
+
+    <div class="players">
+      <div class="player-box left">
+        <strong>Тоглогч 1</strong>
+        <h1>ОНОО</h1>
+        <div class="too"><span id="score1">0</span></div>
+        <h2>Хаялтын тоо</h2>
+        <div class="too"><span id="rollCount1">0</span> удаа</div>
+      </div>
+      <div class="wrapper">
+        <div class="player-box right">
+          <strong>Тоглогч 2</strong>
+          <h1 id="shar">ОНОО</h1>
+          <div class="too"><span id="score2">0</span></div>
+          <h2>Хаялтын тоо</h2>
+          <div class="too"><span id="rollCount2">0</span> удаа</div>
+        </div>
+      </div>
+
+    </div>
+  <div class="container">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-xl w-full text-center space-y-6">
+      <h1 class="text-3xl font-bold text-purple-700">🐴 Шагай Хаях - 2 Тоглогч</h1>
+  
+      <div class="text-lg text-gray-800">
+        <strong>Ээлж:</strong> <span id="turn" class="font-bold text-purple-700">Тоглогч 1</span>
+      </div>
+  
+      <div id="shagaiContainer" class="grid grid-cols-2 gap-4 text-lg font-medium text-gray-700">
+        <!-- Шагайнууд энд гарч ирнэ -->
+      </div>
+  
+      <div id="winner" class="text-2xl font-bold text-green-600 hidden">🥇 Ялагч: Тоглогч </div>
+  
+      <button onclick="trueShagai()" id="throwButton" class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-xl text-lg shadow-md transition duration-300">
+        Шагай Хаях
+      </button>
+      <button onclick="resetGame()" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-md transition">
+        ♻️ Шинэ тоглоом
+      </button>
+  
+      <!-- Дуу -->
+      <audio id="throwSound" src="https://cdn.pixabay.com/audio/2022/03/26/audio_5c9ed63ac6.mp3"></audio>
+    </div>
+  </div>
+    
+  <!-- Мэндчилгээ -->
+  <div id="fireworks"></div>
+<div id="congratulations" style="display: none;">Баяр хүргэе!</div>
+<div id="soliotoi" style="display: none;">CОЛИОТЭЙЙЙ</div>
+<div id="wow" style="display: none;">WOOOOOOOOW</div>
+<div id="amazing" style="display: none;">WOOOOOOOOW</div>
+
+
+
+
+
+  <script>
+
+
+
+
+    function close(){
+      
+    }
+    function toggleDurem() {
+    const duremBox = document.querySelector('.durem');
+    if (duremBox.classList.contains('show')) {
+      duremBox.classList.remove('show');
+      // document.querySelector('.players').style.display = "inline";
+      document.querySelector('.door').style.display = "none";
+      document.querySelector('.durem').style.display = "block";
+      setTimeout(() => {
+        duremBox.style.display = 'none';
+      }, 300); 
+    } else {
+      duremBox.style.display = 'block';
+      setTimeout(() => {
+        duremBox.classList.add('show');
+      }, 10); 
+    }
+  }
+
+  document.getElementById("towch").addEventListener("click", function() {
+  document.querySelector(".durem").style.display = "none";
+});
+
+
+
+
+    function startFireworks() {
+  // Салютын бөмбөлөгүүдийг үүсгэх
+  const fireworksContainer = document.getElementById('fireworks');
+  
+  // Салют үүсгэх функц
+  function createFirework() {
+    const firework = document.createElement('div');
+    firework.classList.add('firework');
+    
+    // Байршил тохируулах
+    firework.style.left = Math.random() * window.innerWidth + 'px';
+    
+    // Бөмбөлөг үүсгэх
+    fireworksContainer.appendChild(firework);
+    
+    // Анимаци дуусахад объект арилгах
+    setTimeout(() => {
+      firework.remove();
+    }, 1500);
+  }
+
+  
+  const interval = setInterval(createFirework, 100);
+
+  
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 3000);
+}
+
+
+
+
+
+    const shagaiTypes = [
+      { emoji: "🐎", name: "Морь" },
+      { emoji: "🐑", name: "Хонь" },
+      { emoji: "🐪", name: "Тэмээ" },
+      { emoji: "🐐", name: "Ямаа" }
+      
+    ];
+    function Shagai() {
+  document.querySelector('.door').style.display = "block";
+  document.querySelector('.players').style.display = "none";
+  const randomIndex = Math.floor(Math.random() * shagaiTypes.length);
+  const randomIndex2 = Math.floor(Math.random() * shagaiTypes.length);
+  const randomIndex3 = Math.floor(Math.random() * shagaiTypes.length);
+  const randomIndex4 = Math.floor(Math.random() * shagaiTypes.length);
+
+  const shagaiOne = shagaiTypes[randomIndex];
+  const shagaiTwo = shagaiTypes[randomIndex2];
+  const shagaiThree = shagaiTypes[randomIndex3];
+  const shagaiFour = shagaiTypes[randomIndex4];
+
+  // Шагайнуудыг харуулах
+  document.getElementById("shagai1").textContent = shagaiOne.emoji;
+  document.getElementById("shagai2").textContent = shagaiTwo.emoji;
+  document.getElementById("shagai3").textContent = shagaiThree.emoji;
+  document.getElementById("shagai4").textContent = shagaiFour.emoji;
+
+  // үр дүн 
+  document.getElementById("result").textContent = `Танд ${shagaiOne.name}, ${shagaiTwo.name}, ${shagaiThree.name}, ${shagaiFour.name} буулаа!`;
+  let message = "";
+  let output = "";
+
+  // боломжууд
+  if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Хонь", "Тэмээ", "Ямаа"].sort().join()
+  ) {
+    message = "Таньд баяр хүргэе! Та 4 бэрх буулгалаа";
+    output = "Машид сайн тэргүүн төлгө, санасан бүхэн сэтгэлчлэн бүтнэ."
+
+     // Баяр хүргэе мэндчилгээ
+    const congratsElement = document.getElementById('congratulations');
+    congratsElement.style.display = "block";
+    setTimeout(() => {
+      congratsElement.style.display = "none";
+    }, 2000);  
+
+    // Салют эхлүүлэх
+    startFireworks();
+  
+
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Морь", "Морь"].sort().join()
+  ) {
+    message = "........ГАЙХАЛТАЙ........";
+    output = "Мэргийн дээд төлгө, үйлс өлзий дэмбэрэлтэй бүтэх ерөөлтэй."
+
+    // Баяр хүргэе мэндчилгээ гаргах
+    const congratsElement = document.getElementById('amazing');
+    congratsElement.style.display = "block";
+    setTimeout(() => {
+      congratsElement.style.display = "none";
+    }, 2000);  
+
+    // Салют эхлүүлэх
+    startFireworks();
+
+
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Морь", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Санаж бодсон хэрэг зориг 2 талд баяртай сайн."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Морь", "Тэмээ"].sort().join()
+  ) {
+    message = "!!!!WOOOOOOOOOOOOOOW!!!!";
+    output = "Ирж очих нь түргэн, хүсэл мөрөөдөл бүрэн биелэнэ."
+
+    // Баяр хүргэе мэндчилгээ гаргах
+    const congratsElement = document.getElementById('wow');
+    congratsElement.style.display = "block";
+    setTimeout(() => {
+      congratsElement.style.display = "none";
+    }, 2000);  
+
+    // Салют эхлүүлэх
+    startFireworks();
+    
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Морь", "Хонь"].sort().join()
+  ) {
+    message = " !!!СОЛИОТЭЙЙЙЙЙЙЙЙЙЙЙЙ!!!";
+    output = "Тэгш сайн, ажил хэрэг зориг 2 талд баяртай сайн."
+
+    // Баяр хүргэе мэндчилгээ гаргах
+    const congratsElement = document.getElementById('soliotoi');
+    congratsElement.style.display = "block";
+    setTimeout(() => {
+      congratsElement.style.display = "none";
+    }, 2000);  
+
+    // Салют эхлүүлэх
+    startFireworks();
+
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Хонь", "Хонь"].sort().join()
+  ) {
+    message = "-----------------";
+    output = "Алсын үйл түргэн бүтэх, түшмэл дээдэстэй учрах"
+    
+
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Хонь", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хүссэн бүхэн бэлэг ерөөлтэй бүтэж сайхан эмэгтэйтэй уулзаж магад"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Хонь", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Ирж очих нь түргэн, зорьсон хүнтэйгээ уулзалдахгүй"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Хонь", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Гадны нөлөөгүй, идээ будаатай учрах тавилантай."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Хонь", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Өөрийн талд бат сонин тавилантай учирч магад"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Тэмээ", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Урт удаан өлзийтэй, бэлгэ шинжийг бадраах амой."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Тэмээ", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйл хэрэг гадны хүний талд, гэвч хэтийн төлөв сайн."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Тэмээ", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Урт удаан баяртай хэрэг үйл бүхэн бүтнэ."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Тэмээ", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хүч төгөлдөр боловч бүтээмж муу, саад учрана."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Ямаа", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Бусдын гарт ужиг яриа хэлцэлээр тохиролцох талтай."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Ямаа", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Цагаан хэл аманд орох, зорьсон хэрэг бүтэмжгүй байх"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Ямаа", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйл бүтэхгүй, гадны нөлөөтэй яваад ирээгүй байх"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Ямаа", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйл бүтэмж муу, хар буруу санаатантай учрах"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Морь", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйлс бүтэмж удаж биелэнэ, тэмцэлд дийлэгдэх талтай."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Тэмээ", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хэрэг явдал бусдын талд сөргөлдөөнтэй байх"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Ямаа", "Ямаа", "Тэмээ", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Эсэн мэнд, хүлээвч уулзах бэрх, яриа хэлцэл саадтай"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Тэмээ", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйл хэрэг бүтэмжтэй, зам мөр өлзийтэй."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Ямаа", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хэрэг зориг амар бүтэхгүй, мөргөлдөөнд дийлж магад"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Ямаа", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Өлзийтэй сайн, тус хүргэх хүнтэй учрана."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Ямаа", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Алсын үйл хэрэг сайн, хүсэл мөрөөдөл биелэнэ."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Морь", "Морь", "Хонь", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Баяртай сайн, бодлого бүхэн биелэнэ."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Тэмээ", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Өөрийн тал саадтай байх, сайн нөхөртэй учрах"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Ямаа", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хэрэг бүтэх нь үл мэдэгдэх, эмэгтэй хүнд хууртагдаж мэднэ."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Ямаа", "Ямаа"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Алсуураа саадтай, явдал мөр удаан, маргаантай."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Ямаа", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Зөн бэлгэ баяртай, хувь заяаны тэнгэр таныг ивээнэ."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Морь", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Алсын хэл сайн, асуудал таны талд"
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Хонь", "Хонь", "Ямаа", "Тэмээ"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Үйл явдэл бүтэх эсэх нь шийдгүй."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Ямаа", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Анхны явдал баяртай. хожимдсон ч хэтийн төлөв найдлагатай."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Ямаа", "Хонь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Аливаа хэрэг явдал бүтэх нь эргэлзээтэй."
+  }else if (
+    [shagaiOne.name, shagaiTwo.name, shagaiThree.name, shagaiFour.name].sort().join() ===
+    ["Тэмээ", "Тэмээ", "Хонь", "Морь"].sort().join()
+  ) {
+    message = "------------------";
+    output = "Хэл хүргэж ирэх, Өөрийн талд сэтгэл ханамжтай."
+  }
+
+  document.getElementById("tailbar1").textContent = (message ? `\n${message}` : "");
+  document.getElementById("tailbar2").textContent = (output ? `\n${output}` : "");
+}
+
+let rollCounts =[0, 0]; // Тоглогч 1, тоглогч 2 тус бүрийн хаялт
+const outcomes = [
+      { name: "🐴 Морь", score: 10 },
+      { name: "🐫 Тэмээ", score: 8 },
+      { name: "🐑 Хонь", score: 6 },
+      { name: "🐐 Ямаа", score: 4 },
+    ];
+
+    let scores = [0, 0];
+    let currentPlayer = 0; 
+
+    function trueShagai() {
+      const container = document.getElementById('shagaiContainer');
+      const throwSound = document.getElementById('throwSound');
+      throwSound.play();
+
+      container.innerHTML = '';
+      let total = 0;
+
+      for (let i = 0; i < 4; i++) {
+        const result = outcomes[Math.floor(Math.random() * outcomes.length)];
+        const div = document.createElement('div');
+        div.className = 'bg-purple-100 rounded-xl p-3 shadow text-center';
+        div.textContent = result.name;
+        container.appendChild(div);
+        total += result.score;
+      }
+
+      scores[currentPlayer] += total;
+      document.getElementById('score1').textContent = scores[0];
+      document.getElementById('score2').textContent = scores[1];
+
+      rollCounts[currentPlayer]++;
+      document.getElementById('rollCount1').textContent = rollCounts[0];
+      document.getElementById('rollCount2').textContent = rollCounts[1];
+
+      checkWinner();
+      currentPlayer = 1 - currentPlayer;
+      document.getElementById('turn').textContent = `Тоглогч ${currentPlayer + 1}`;
+    }
+
+    function checkWinner() {
+      if (scores[0] >= 256 || scores[1] >= 256) {
+        const winner = scores[0] >= 256 ? 1 : 2;
+        document.getElementById('winner').textContent = `🥇 Ялагч: Тоглогч ${winner}`;
+        document.getElementById('winner').classList.remove('hidden');
+        document.getElementById('throwButton').disabled = true;
+        document.getElementById('throwButton').classList.add('opacity-50');
+      }
+    }
+
+    function resetGame() {
+  scores = [0, 0];
+  currentPlayer = 0;
+  rollCounts = [0, 0];
+  document.getElementById('score1').textContent = '0';
+  document.getElementById('score2').textContent = '0';
+  document.getElementById('turn').textContent = 'Тоглогч 1';
+  document.getElementById('rollCount1').textContent = '0';
+  document.getElementById('rollCount2').textContent = '0';
+  document.getElementById('winner').classList.add('hidden');
+  document.getElementById('shagaiContainer').innerHTML = '';
+  document.getElementById('throwButton').disabled = false;
+  document.getElementById('throwButton').classList.remove('opacity-50');
+}
+  </script>
+  <p id="buteegch">Creator:11л ангийн сурагч А.Даваадорж</p>
+</body>
+</html>
